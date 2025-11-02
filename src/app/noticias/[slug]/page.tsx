@@ -10,27 +10,22 @@ import { ArticleSummary } from '@/components/article-summary';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { generateSlug } from '@/lib/utils';
+import type { Article } from '@/types';
 
 export const revalidate = 300; // Revalidate every 5 minutes
 
 export async function generateStaticParams() {
   const { articles } = await getFeed();
  
-  return articles.map((article) => ({
-    slug: Buffer.from(article.guid).toString('base64url'),
+  return articles.map((article: Article) => ({
+    slug: generateSlug(article.guid),
   }));
 }
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  let guid: string;
-  try {
-    guid = Buffer.from(params.slug, 'base64url').toString('ascii');
-  } catch (e) {
-    notFound();
-  }
-  
   const { articles } = await getFeed();
-  const article = articles.find(a => a.guid === guid);
+  const article = articles.find(a => generateSlug(a.guid) === params.slug);
 
   if (!article) {
     notFound();

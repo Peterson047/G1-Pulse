@@ -6,10 +6,10 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar, Tag } from 'lucide-react';
 import { Badge } from './ui/badge';
+import { generateSlug } from '@/lib/utils';
 
 export function ArticleCard({ article }: { article: Article }) {
-  // Base64 encode the GUID to use as a URL-safe slug
-  const slug = Buffer.from(article.guid).toString('base64url');
+  const slug = generateSlug(article.guid);
   
   const timeAgo = formatDistanceToNow(new Date(article.isoDate), {
     addSuffix: true,
