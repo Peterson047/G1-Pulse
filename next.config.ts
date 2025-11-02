@@ -33,6 +33,18 @@ const nextConfig: NextConfig = {
         hostname: 's2.glbimg.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 's2-g1.glbimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'g1.globo.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
